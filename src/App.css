@@ -1,0 +1,151 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+/* Light Theme Colors */
+body[theme="light"] {
+  /* Color variables */
+  --color-1: rgb(196, 220, 241);
+  --color-2: white;
+  --color-3: rgb(139, 94, 94);
+  --color-4: rgb(80, 82, 110);
+  --links-a: rgb(10, 10, 10);
+  --links-h: rgb(139, 94, 94);
+}
+
+/* Dark Theme colors */
+body[theme="dark"] {
+  --color-1: #1e1f26;
+  --color-2: #292c33;
+  --color-3: rgb(39, 40, 42);
+  --color-4: rgb(186, 186, 202);
+  --links-a: rgb(250, 245, 245);
+  --links-h: rgb(196, 220, 241);
+}
+
+body {
+  /* position: relative; */
+  color: var(--color-4);
+  background-color: var(--color-1);
+  min-height: 100vh;
+}
+
+section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mainContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  top: 65px;
+}
+
+.greeting {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  margin: 20px;
+  background-color: var(--color-2);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  margin: 20px;
+  background-color: var(--color-2);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+}
+
+a:visited {
+  color: var(--links-h);
+}
+
+a:hover {
+  color: var(--links-h);
+}
+
+.theme-switcher {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+}
+
+input {
+  width: 0px;
+  height: 0px;
+  visibility: hidden;
+}
+
+input:checked + label {
+  background-color: rgb(25,26, 37);
+  border: 2px solid whitesmoke;
+}
+
+input:checked + label::after {
+  background-color: aliceblue;
+  left: calc(100% - 25px);
+}
+
+label {
+  display: block;
+  /* Make the text dissappear */
+  text-indent: -9999px;
+  height: 30px;
+  width: 60px;
+  background-color: aliceblue;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: .5s ease background-color;
+}
+
+label::after {
+  position: absolute;
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  background-color: rgb(30,16, 233);
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  transition: .5s ease;
+}
+
+.btnConnectWallet {
+  background: #3498db;
+  border-radius: 28px;
+  border: 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  text-shadow: 1px 1px 3px #666666;
+  color: #ffffff;
+  font-size: 20px;
+  width: 50%;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btnConnectWallet:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}
