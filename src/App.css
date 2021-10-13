@@ -146,6 +146,7 @@ label::after {
 }
 
 .btnConnectWallet:hover {
+  cursor: pointer;
   background: #3cb0fd;
   text-decoration: none;
 }

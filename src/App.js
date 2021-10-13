@@ -83,7 +83,7 @@ function App() {
         </div>
 
         <div className="app">
-          <Wave account={currentAccount} connect={connectWallet}/>
+          <Wave account={currentAccount} connect={() => connectWallet()}/>
         </div>
       </div>
     </section>
