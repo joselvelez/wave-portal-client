@@ -2,10 +2,17 @@ import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import './App.css';
 import { Wave } from './Wave';
+import { Transaction } from './Transaction';
+import abi from  './utils/WavePortal.json';
 
 function App() {
   const [currentTheme, setTheme] = useState('light');
   const [currentAccount, setCurrentAccount] = useState('');
+  const [lastWaveData, setLastWaveData] = useState();
+  const [transaction, setTransaction] = useState();
+
+  const contractAddress = '0xa7B36508C42591aE327b3a160f5465406d9DA8E4';
+  const contractABI = abi.abi;
 
   // Confirm access to window.ethereum object
   const checkWalletConnection = async () => {
@@ -53,6 +60,48 @@ function App() {
 
       console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0]);
+
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+      const lastWaveObj = {
+        lastWave: '',
+        lastWaver: '',
+        totalWaves: '',
+      }
+
+      test = await wavePortalContract.lastWaveAt;
+      // lastWaveObj.lastWaver = wavePortalContract.getLastWaveAt();
+      console.log(test);
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const wave = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        const waveTxn = await wavePortalContract.wave();
+        console.log("Mining transaction...", waveTxn);
+
+        await waveTxn.wait();
+        console.log("Mined...", waveTxn.hash);
+
+        let count = await wavePortalContract.getTotalWaves();
+        console.log("Retrieved total wave count...", count.toNumber());
+
+      } else {
+        console.log("Ethereum object does not exist!");
+      }
+
     } catch (e) {
       console.log(e);
     }
@@ -83,8 +132,14 @@ function App() {
         </div>
 
         <div className="app">
-          <Wave account={currentAccount} connect={() => connectWallet()}/>
+          <Wave account={currentAccount} connect={() => connectWallet()} wave={() => wave()} />
         </div>
+
+        {lastWaveData ? 
+          <div className="app">
+            <Transaction />
+          </div> : ''
+        }
       </div>
     </section>
   );
