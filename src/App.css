@@ -32,6 +32,21 @@ body {
   min-height: 100vh;
 }
 
+p {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+h4 {
+  margin-top: 3px;
+  margin-bottom: 6px;
+}
+
+a:link {
+  margin-top: 3px;
+  margin-bottom: 6px;
+}
+
 section {
   width: 100%;
   display: flex;
@@ -74,6 +89,20 @@ section {
   background-color: var(--color-2);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
+}
+
+.waveStats {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.waveStat {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 a:visited {
