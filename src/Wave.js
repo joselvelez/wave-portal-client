@@ -1,8 +1,8 @@
 import { ethers } from "ethers";
 import { useWallet } from "./WalletContext";
 
-export const Wave = () => {
-    const {currentAccount, contractAddress, contractABI} = useWallet();
+export const Wave = ({ setLastWaverAddress }) => {
+    const {contractAddress, contractABI} = useWallet();
 
     const sendWave = async () => {
         try {
@@ -17,7 +17,8 @@ export const Wave = () => {
             console.log("Mining transaction...", waveTxn);
     
             await waveTxn.wait();
-            console.log("Mined...", waveTxn.hash);
+            console.log("Mined...", waveTxn);
+            setLastWaverAddress(waveTxn.from);
     
             let count = await wavePortalContract.getTotalWaves();
             console.log("Retrieved total wave count...", count.toNumber());

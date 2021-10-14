@@ -11,7 +11,7 @@ body[theme="light"] {
   --color-2: white;
   --color-3: rgb(139, 94, 94);
   --color-4: rgb(80, 82, 110);
-  --links-a: rgb(10, 10, 10);
+  --links-a: rgb(8, 23, 243);
   --links-h: rgb(139, 94, 94);
 }
 
@@ -38,11 +38,6 @@ p {
 }
 
 h4 {
-  margin-top: 3px;
-  margin-bottom: 6px;
-}
-
-a:link {
   margin-top: 3px;
   margin-bottom: 6px;
 }
@@ -94,6 +89,7 @@ section {
 .waveStats {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -111,6 +107,12 @@ a:visited {
 
 a:hover {
   color: var(--links-h);
+}
+
+a:link {
+  color: var(--links-a);
+  margin-top: 3px;
+  margin-bottom: 6px;
 }
 
 .theme-switcher {

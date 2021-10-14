@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import abi from  './utils/WavePortalLocalHost.json';
+import abi from  './utils/WavePortal.json';
 
 const WalletContext = React.createContext();
 
 export function WalletProvider({ children }) {
   const [currentAccount, setCurrentAccount] = useState('');
-  const [contractAddress, setContractAddress] = useState('0x5FbDB2315678afecb367f032d93F642f64180aa3');
+  const [contractAddress, setContractAddress] = useState('0x5D8858888bFc5ad37096d8184e7230d6b2629da9');
   const [contractABI, setContractABI] = useState(abi.abi);
 
   const walletObject = { contractAddress, setContractAddress, contractABI, setContractABI, currentAccount, setCurrentAccount };
@@ -27,7 +27,6 @@ export function WalletProvider({ children }) {
       if (accounts.length !== 0) {
           console.log("Found an authorized account", accounts[0]);
           setCurrentAccount(accounts[0]);
-          console.log("testing..", currentAccount);
       } else {
           console.log("No authorized account found");
       }
@@ -39,7 +38,7 @@ export function WalletProvider({ children }) {
 
   useEffect(() => {
     checkWalletConnection();
-  }, []);
+  },[]);
 
   return (
       <WalletContext.Provider value={walletObject}>

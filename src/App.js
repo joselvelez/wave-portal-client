@@ -2,11 +2,12 @@ import './App.css';
 import { useState } from 'react';
 import { Wave } from './Wave';
 import { WaveStats } from './WaveStats';
-import { Transaction } from './Transaction';
 import { Connect } from './Connect';
 import { useWallet } from './WalletContext';
 
 function App() {
+  const [lastWaverAddress, setLastWaverAddress] = useState();
+  const [lastWaverSubAddress, setLastWaverSubAddress] = useState();
   const {currentAccount} = useWallet();
   const [currentTheme, setTheme] = useState('light');
 
@@ -37,19 +38,25 @@ function App() {
 
           {currentAccount ?
             <div className="app">
-              <WaveStats />
+              <WaveStats 
+                setLastWaverAddress={setLastWaverAddress}
+                lastWaverAddress={lastWaverAddress}
+                setLastWaverSubAddress={setLastWaverSubAddress}
+                lastWaverSubAddress={lastWaverSubAddress}
+
+              />
             </div> : ''          
           }
 
         <div className="app">
-          {currentAccount ? <Wave /> : <Connect /> }
+          {currentAccount ? <Wave setLastWaverAddress={setLastWaverAddress} /> : <Connect /> }
         </div>
 
-        {/* {lastWaveData ? 
-          <div className="app">
-            <Transaction />
-          </div> : ''
-        } */}
+        <div className="greeting">
+          <p>The code for this project is on my github:</p>
+          <p>Front End - <a href="https://github.com/joselvelez/wave-portal-client">https://github.com/joselvelez/wave-portal-client</a></p>
+          <p>Hardhat project - <a href="https://github.com/joselvelez/wave-portal-jv">https://github.com/joselvelez/wave-portal-jv</a></p>
+        </div>
       </div>
     </section>
   );
