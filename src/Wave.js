@@ -1,8 +1,8 @@
 import { ethers } from "ethers";
 import { useWallet } from "./WalletContext";
 
-export const Wave = ({ setLastWaverAddress }) => {
-    const {contractAddress, contractABI} = useWallet();
+export const Wave = () => {
+    const {contractAddress, contractABI, setLastWaverAddress} = useWallet();
 
     const sendWave = async () => {
         try {

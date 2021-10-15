@@ -1,93 +1,26 @@
-import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import './App.css';
 import { useWallet } from './WalletContext';
+import { LastWaveTimeStamp } from './LastWaveTimeStamp';
+import { LastWaverAddress } from './LastWaverAddress';
+import { TopWaverAddress} from './TopWaverAddress';
 
-export const WaveStats = ({
-        lastWaverAddress,
-        setLastWaverAddress,
-        lastWaverSubAddress,
-        setLastWaverSubAddress,
-
-    }) => {
-    const [contractAvailable, setContractAvailable] = useState(false);
-    const [maxWaves, setMaxWaves] = useState();
-    const [topWaverAddress, setTopWaverAddress] = useState();
-    const [topWaverSubAddress, setTopWaverSubAddress] = useState();
-    const [lastWaveTimeStamp, setLastWaveTimeStamp] = useState();
+export const WaveStats = () => {
     const {contractAddress, contractABI} = useWallet();
-
-    const getLastWaveTimestamp = async (contract) => {
-        setLastWaveTimeStamp(Date(await contract.getLastWaveAt()))
-    }
-
-    const getLastWaverAddress = async (contract) => {
-        // const provider = new ethers.providers.Web3Provider(ethereum);
-        // const signer = provider.getSigner();
-        // const contract = new ethers.Contract(contractAddress, contractABI, signer);
-        setLastWaverAddress((await contract.getLastWaver()).toString());
-        setLastWaverSubAddress((await contract.getLastWaver()).toString().substring(1,8));
-        console.log(lastWaverAddress);
-    }
-
-    const getTopWaverAddress = async (contract) => {
-        // const provider = new ethers.providers.Web3Provider(ethereum);
-        // const signer = provider.getSigner();
-        // const contract = new ethers.Contract(contractAddress, contractABI, signer);
-        setTopWaverAddress((await contract.getTopWaver()).toString());
-        setTopWaverSubAddress((await contract.getTopWaver()).toString().substring(1,8));
-        console.log(topWaverAddress);
-    }
-
-    const getMaxWaves = async (contract) => {
-        // const provider = new ethers.providers.Web3Provider(ethereum);
-        // const signer = provider.getSigner();
-        // const contract = new ethers.Contract(contractAddress, contractABI, signer);
-        setMaxWaves((await contract.getMaxWaves()).toString());
-        console.log(maxWaves);
-    }
-
     const { ethereum } = window;
-
-    if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(contractAddress, contractABI, signer);
-        
-        if(contract) {
-            getLastWaveTimestamp(contract);
-            getLastWaverAddress(contract);
-            getTopWaverAddress(contract);
-            getMaxWaves(contract);
-            setContractAvailable(true);
-        } else {
-            console.log("No contract available.");
-            setContractAvailable(false);
-        }
-    }
-
-    useEffect(() => {
-        console.log('sup man');
-    }, []);
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
     return (
         <>
-            {contractAvailable ?
+            {contract ?
                 <div className="waveStats">
-                    <div className="waveStat">
-                        <h4>Last waver was</h4>
-                        <a href={`https://rinkeby.etherscan.io/address/${lastWaverAddress}`}>{lastWaverSubAddress}</a>
-                    </div>
+                    <LastWaverAddress />
 
-                    <div className="waveStat">
-                        <h4>Last wave was</h4>
-                        <p>{lastWaveTimeStamp}</p>
-                    </div>
+                    <LastWaveTimeStamp />
 
-                    <div className="waveStat">
-                        <h4>Top waver is</h4>
-                        <p><a href={`https://rinkeby.etherscan.io/address/`}>{topWaverSubAddress}</a> with {maxWaves} waves!</p>
-                    </div>
+                    <TopWaverAddress />
                 </div> :
                 
             <div className="waveStats">

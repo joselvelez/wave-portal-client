@@ -5,10 +5,18 @@ const WalletContext = React.createContext();
 
 export function WalletProvider({ children }) {
   const [currentAccount, setCurrentAccount] = useState('');
-  const [contractAddress, setContractAddress] = useState('0x5D8858888bFc5ad37096d8184e7230d6b2629da9');
-  const [contractABI, setContractABI] = useState(abi.abi);
+  const [lastWaverAddress, setLastWaverAddress] = useState();
+  const contractAddress ='0x5FbDB2315678afecb367f032d93F642f64180aa3';
+  const contractABI = abi.abi;
 
-  const walletObject = { contractAddress, setContractAddress, contractABI, setContractABI, currentAccount, setCurrentAccount };
+  const walletObject = {
+      contractAddress,
+      contractABI,
+      currentAccount,
+      setCurrentAccount,
+      lastWaverAddress,
+      setLastWaverAddress
+    };
 
   // Confirm access to window.ethereum object
   const checkWalletConnection = async () => {
@@ -18,9 +26,8 @@ export function WalletProvider({ children }) {
       if (!ethereum) {
         console.log("You need to connect your MetaMask wallet!");
         return;
-      } else {
-        console.log("Connection to the ethereum object established", ethereum);
-      }
+      } 
+
       // Check if app is authorized to access this account
       const accounts = await ethereum.request({ method: 'eth_accounts' });
 
@@ -38,7 +45,7 @@ export function WalletProvider({ children }) {
 
   useEffect(() => {
     checkWalletConnection();
-  },[]);
+  });
 
   return (
       <WalletContext.Provider value={walletObject}>
@@ -48,6 +55,6 @@ export function WalletProvider({ children }) {
 }
 
 export const useWallet = () => {
-    const {currentAccount, setCurrentAccount, contractAddress, contractABI} = useContext(WalletContext);
-    return {currentAccount, setCurrentAccount, contractAddress, contractABI};
+    const {currentAccount, setCurrentAccount, contractAddress, contractABI, lastWaverAddress, setLastWaverAddress} = useContext(WalletContext);
+    return {currentAccount, setCurrentAccount, contractAddress, contractABI, lastWaverAddress, setLastWaverAddress};
 }

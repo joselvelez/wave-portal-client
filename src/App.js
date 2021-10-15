@@ -1,15 +1,17 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Wave } from './Wave';
 import { WaveStats } from './WaveStats';
 import { Connect } from './Connect';
 import { useWallet } from './WalletContext';
 
 function App() {
-  const [lastWaverAddress, setLastWaverAddress] = useState();
-  const [lastWaverSubAddress, setLastWaverSubAddress] = useState();
   const {currentAccount} = useWallet();
   const [currentTheme, setTheme] = useState('light');
+
+  useEffect(() => {
+    console.log(`Setting current threme to ${currentTheme} mode.`);
+  }, [currentTheme])
 
   document.body.setAttribute('theme', currentTheme);
 
@@ -38,18 +40,12 @@ function App() {
 
           {currentAccount ?
             <div className="app">
-              <WaveStats 
-                setLastWaverAddress={setLastWaverAddress}
-                lastWaverAddress={lastWaverAddress}
-                setLastWaverSubAddress={setLastWaverSubAddress}
-                lastWaverSubAddress={lastWaverSubAddress}
-
-              />
+              <WaveStats />
             </div> : ''          
           }
 
         <div className="app">
-          {currentAccount ? <Wave setLastWaverAddress={setLastWaverAddress} /> : <Connect /> }
+          {currentAccount ? <Wave /> : <Connect /> }
         </div>
 
         <div className="greeting">
