@@ -3,7 +3,6 @@ import './App.css';
 import { useWallet } from './WalletContext';
 import { LastWaveTimeStamp } from './LastWaveTimeStamp';
 import { LastWaverAddress } from './LastWaverAddress';
-import { TopWaverAddress} from './TopWaverAddress';
 
 export const WaveStats = () => {
     const {contractAddress, contractABI} = useWallet();
@@ -19,8 +18,6 @@ export const WaveStats = () => {
                     <LastWaverAddress />
 
                     <LastWaveTimeStamp />
-
-                    <TopWaverAddress />
                 </div> :
                 
             <div className="waveStats">

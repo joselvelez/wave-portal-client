@@ -4,9 +4,9 @@ import abi from  './utils/WavePortal.json';
 const WalletContext = React.createContext();
 
 export function WalletProvider({ children }) {
-  const [currentAccount, setCurrentAccount] = useState('');
+  const [currentAccount, setCurrentAccount] = useState();
   const [lastWaverAddress, setLastWaverAddress] = useState();
-  const contractAddress ='0x5D8858888bFc5ad37096d8184e7230d6b2629da9';
+  const contractAddress ='0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
   const contractABI = abi.abi;
 
   const walletObject = {

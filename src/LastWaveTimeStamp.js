@@ -19,7 +19,7 @@ export const LastWaveTimeStamp = () => {
     }
 
     return (
-        <div className="waveStat">
+        <div>
             <h4>Last wave was</h4>
             <p>{lastWaveTimeStamp}</p>
         </div>

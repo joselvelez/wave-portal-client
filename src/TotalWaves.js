@@ -2,8 +2,8 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react"
 import { useWallet } from "./WalletContext";
 
-export const TopWaverAddress = () => {
-    const [topWaverAddress, setTopWaverAddress] = useState();
+export const TotalWaves = () => {
+    const [totalWaves, setTotalWaves] = useState();
     const {contractAddress, contractABI} = useWallet();
     const { ethereum } = window;
     const provider = new ethers.providers.Web3Provider(ethereum);
@@ -11,15 +11,15 @@ export const TopWaverAddress = () => {
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
     useEffect(() => {
-        getTopWaverAddress();
+        getTotalWaves();
     });
 
-    const getTopWaverAddress = async () => {
+    const getTotalWaves = async () => {
         try {
-            setTopWaverAddress(await contract.getTopWaver());
+            setTotalWaves(await contract.getTotalWaves());
         } catch(e) {
             console.log('No wallet connected.');
         }
     }
-    return topWaverAddress ? `Top Waver Address: ${topWaverAddress}` : 'No waves';
+    return totalWaves ? `Total Waves: ${totalWaves.toString()}` : 'No waves';
 }
