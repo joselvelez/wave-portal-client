@@ -21,6 +21,20 @@ export const Transactions = () => {
         setWavesArray(data);
     }
 
+    if (ethereum) {
+        contract.on("NewWave", (from, timestamp, message) => {
+            console.log(`New wave from ${from} at ${timestamp}: ${message}`);
+    
+            setWavesArray(prev => [...prev, {
+                waver: from,
+                timestamp: timestamp,
+                message: message
+            }]);
+        });
+    } else {
+        console.log("Connect your wallet.");
+    }
+
     useEffect(() => {
         getWaves();
     });

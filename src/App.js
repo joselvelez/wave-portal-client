@@ -10,7 +10,7 @@ import { MaxWaves } from './MaxWaves';
 import { Transactions } from './Transaction';
 
 function App() {
-  const {currentAccount} = useWallet();
+  const {currentAccount, contractAddress} = useWallet();
   const [currentTheme, setTheme] = useState('light');
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function App() {
             </p>
             <p>
               The current contract address for this web3 app is &nbsp;
-              <a href="https://rinkeby.etherscan.io/address/0xbfac607c15e23d8ae6c17106bd383d0f01bda780">0xbfac607c15e23d8ae6c17106bd383d0f01bda780</a>
+              <a href={`https://rinkeby.etherscan.io/address/${contractAddress}`}>{contractAddress}</a>
             </p>
             <p>
               The code for this project is on my github: <b>Front End</b>:&nbsp; 
