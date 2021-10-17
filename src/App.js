@@ -40,6 +40,10 @@ function App() {
               I want to be a part of that transformation!
             </p>
             <p>
+              The current contract address for this web3 app is 
+              <a href="https://rinkeby.etherscan.io/address/0xbfac607c15e23d8ae6c17106bd383d0f01bda780">0xbfac607c15e23d8ae6c17106bd383d0f01bda780</a>
+            </p>
+            <p>
               The code for this project is on my github: <b>Front End</b>:&nbsp; 
               <a href="https://github.com/joselvelez/wave-portal-client">https://github.com/joselvelez/wave-portal-client</a>&nbsp; 
               <b>Hardhat project</b>: <a href="https://github.com/joselvelez/wave-portal-jv">https://github.com/joselvelez/wave-portal-jv</a>
