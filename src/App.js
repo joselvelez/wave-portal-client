@@ -40,7 +40,7 @@ function App() {
               I want to be a part of that transformation!
             </p>
             <p>
-              The current contract address for this web3 app is 
+              The current contract address for this web3 app is &nbsp;
               <a href="https://rinkeby.etherscan.io/address/0xbfac607c15e23d8ae6c17106bd383d0f01bda780">0xbfac607c15e23d8ae6c17106bd383d0f01bda780</a>
             </p>
             <p>
