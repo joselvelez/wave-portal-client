@@ -6,8 +6,8 @@ const WalletContext = React.createContext();
 export function WalletProvider({ children }) {
   const [currentAccount, setCurrentAccount] = useState();
   const [lastWaverAddress, setLastWaverAddress] = useState();
-  const contractAddress ='0x61F2F0552B450eb02FABfCe418306B52FB80F26f';
-  // const contractAddress ='0x5fbdb2315678afecb367f032d93f642f64180aa3';
+  const contractAddress ='0xBfac607c15e23D8Ae6C17106BD383d0f01Bda780';
+  // const contractAddress ='0x5fbdb2315678afecb367f032d93f642f64180aa3'; // Local testnet
   const contractABI = abi.abi;
 
   const walletObject = {
