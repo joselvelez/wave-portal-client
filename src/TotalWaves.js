@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { useWallet } from "./WalletContext";
 
 export const TotalWaves = () => {

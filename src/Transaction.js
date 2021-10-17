@@ -10,44 +10,41 @@ export const Transactions = () => {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    const wavesArrayCleaned = [];
-
-    useEffect(() => {
-        getWaves();
-    }, []);
-
     const getWaves = async () => {
+        let data = [];
+        
         try {
-            const waves = await contract.getWavesArray();
-            waves.forEach(item => {
-                wavesArrayCleaned.push({
-                    waver: item.waver,
-                    timestamp: new Date(item.timestamp * 1000),
-                    message: item.message
-                });
-            });
+            data = await contract.getWavesArray();
         } catch (e) {
             console.log(e);
         }
-        setWavesArray(wavesArrayCleaned);
+        setWavesArray(data);
     }
-    console.log(wavesArray);
+
+    useEffect(() => {
+        getWaves();
+    });
 
     return (
         <div>
-            {wavesArray.map((item, index) => {
-                return (
-                    <div key={index} className="waveHistory">
-                        <div className="waver">
-                            <div className="waverData">Waver Address: {item.waver}</div>
-                            <div className="waverData">Timestamp: {item.timestamp.toString()}</div>
-                        </div>
-                        <div className="waveMessage">
-                            <h4>Message: {item.message}</h4>
-                        </div>
-                    </div>
-                );
-            })}
+            {wavesArray ? 
+                <div>
+                    {wavesArray.map((item, index) => {
+                        return (
+                            <div key={index} className="waveHistory">
+                                <div className="waver">
+                                    <div className="waverData">Waver Address: {item.waver}</div>
+                                    <div className="waverData">Timestamp: {(new Date(item.timestamp * 1000)).toString()}</div>
+                                </div>
+                                <div className="waveMessage">
+                                    <h4>Message: {item.message}</h4>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div> : 
+                <p>loading...</p>
+            }
         </div>
-    )
+    );
 }

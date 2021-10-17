@@ -241,3 +241,7 @@ a:link {
   margin-left: 5px;
   margin-right: 5px;
 }
+
+.miningIndicator {
+  color: red;
+}

@@ -29,7 +29,6 @@ export const Wave = () => {
             console.log("Retrieved total wave count...", count.toNumber());
 
             console.log(msg);
-            // msgText.current.value = null;
             setIsMining(false);
     
           } else {
@@ -42,7 +41,7 @@ export const Wave = () => {
 
     if (isMining) {
       return (
-        <img src="./utils/loading.gif"  alt="loading..."/>
+        <h3 className="miningIndicator">Transaction is being mined.....block times vary.</h3>
       )
     } else {
       return (
