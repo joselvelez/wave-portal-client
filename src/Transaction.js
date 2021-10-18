@@ -4,7 +4,7 @@ import { useWallet } from "./WalletContext";
 
 export const Transactions = () => {
     const [wavesArray, setWavesArray] = useState([]);
-    const {contractAddress, contractABI} = useWallet();
+    const {contractAddress, contractABI, currentAccount} = useWallet();
     const { ethereum } = window;
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
@@ -15,25 +15,37 @@ export const Transactions = () => {
         
         try {
             data = await contract.getWavesArray();
+
+            contract.on("NewWave", (from, timestamp, message) => {
+                if (from !== currentAccount) {
+                    console.log(`New wave from ${from} at ${timestamp}: ${message}`);
+                } else {
+                    console.log("Stop spamming yourself");
+                }
+            })            
+            
         } catch (e) {
             console.log(e);
         }
         setWavesArray(data);
     }
 
-    if (ethereum) {
-        contract.on("NewWave", (from, timestamp, message) => {
-            console.log(`New wave from ${from} at ${timestamp}: ${message}`);
-    
-            setWavesArray(prev => [...prev, {
-                waver: from,
-                timestamp: timestamp,
-                message: message
-            }]);
-        });
-    } else {
-        console.log("Connect your wallet.");
-    }
+    // if (ethereum) {
+    //     contract.on("NewWave", (from, timestamp, message) => {
+    //         if (from !== currentAccount) {
+    //             console.log(`New wave from ${from} at ${timestamp}: ${message}`);
+    //             setWavesArray(prev => [...prev, {
+    //                 waver: from,
+    //                 timestamp: timestamp,
+    //                 message: message
+    //             }]);
+    //         } else {
+    //             console.log("Stop spamming yourself");
+    //         }
+    //     });
+    // } else {
+    //     console.log("Connect your wallet.");
+    // }
 
     useEffect(() => {
         getWaves();
