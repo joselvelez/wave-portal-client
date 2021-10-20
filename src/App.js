@@ -1,26 +1,15 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Wave } from './Wave';
-import { WaveStats } from './WaveStats';
+import { Wave } from './components/Wave';
+import { WaveStats } from './components/WaveStats';
 import { useWallet } from './WalletContext';
-import { TotalWaves } from './TotalWaves';
-import { TopWaverAddress } from './TopWaverAddress';
-import { MaxWaves } from './MaxWaves';
-import { Transactions } from './Transaction';
+import { TotalWaves } from './components/TotalWaves';
+import { TopWaverAddress } from './components/TopWaverAddress';
+import { MaxWaves } from './components/MaxWaves';
+import { Transactions } from './components/Transaction';
 
 function App() {
-  const {currentAccount, contractAddress} = useWallet();
-  const [currentTheme, setTheme] = useState('light');
-
-  useEffect(() => {
-    console.log(`Setting current threme to ${currentTheme} mode.`);
-  }, [currentTheme])
-
-  document.body.setAttribute('theme', currentTheme);
-
-  const switchTheme = () => {
-    setTheme(currentTheme !== "light" ? "light" : "dark");
-  };
+  const {switchTheme, currentAccount, contractAddress} = useWallet();
 
   return (
     <section>
@@ -51,26 +40,26 @@ function App() {
         </div>
 
         <div className="app">
-          <Wave />
+          {/* <Wave /> */}
         </div>
 
         <div className="app">
           <div className="waveStat">
-            <TotalWaves />
+            {/* <TotalWaves /> */}
           </div>
           <div className="waveStat">
-            <TopWaverAddress />
+            {/* <TopWaverAddress /> */}
           </div>
           <div className="waveStat">
-            <MaxWaves />
+            {/* <MaxWaves /> */}
           </div>
         </div>
 
-        {currentAccount ?
+        {/* {currentAccount ?
             <div className="app">
               <WaveStats />
             </div> : ''          
-        }
+        } */}
 
         <div className="app">
           {/* <Transactions /> */}

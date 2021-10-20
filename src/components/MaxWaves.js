@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useWallet } from "./WalletContext";
+import { useWallet } from "../WalletContext";
 
 export const MaxWaves = () => {
     const [maxWaves, setMaxWaves] = useState();

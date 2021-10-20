@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { ethers } from "ethers";
-import { useWallet } from "./WalletContext";
+import { useWallet } from "../WalletContext";
 
 export const Wave = () => {
     const {contractAddress, contractABI, setLastWaverAddress} = useWallet();

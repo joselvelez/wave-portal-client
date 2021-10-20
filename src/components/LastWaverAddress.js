@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useWallet } from "./WalletContext";
+import { useWallet } from "../WalletContext";
 
 export const LastWaverAddress = () => {
     const { contractProvider, lastWaverAddress, setLastWaverAddress } = useWallet();

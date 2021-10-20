@@ -1,5 +1,5 @@
-import './App.css';
-import { useWallet } from './WalletContext';
+import '../App.css';
+import { useWallet } from '../WalletContext';
 import { LastWaveTimeStamp } from './LastWaveTimeStamp';
 import { LastWaverAddress } from './LastWaverAddress';
 
