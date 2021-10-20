@@ -1,55 +1,24 @@
-import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useWallet } from "./WalletContext";
 
 export const Transactions = () => {
     const [wavesArray, setWavesArray] = useState([]);
-    const {contractAddress, contractABI, currentAccount} = useWallet();
-    const { ethereum } = window;
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+    const { contractProvider } = useWallet();
+
+    useEffect(() => {
+        getWaves();
+    }, []);
 
     const getWaves = async () => {
         let data = [];
         
         try {
-            data = await contract.getWavesArray();
-
-            contract.on("NewWave", (from, timestamp, message) => {
-                if (from !== currentAccount) {
-                    console.log(`New wave from ${from} at ${timestamp}: ${message}`);
-                } else {
-                    console.log("Stop spamming yourself");
-                }
-            })            
-            
+            data = await contractProvider.getWavesArray();
         } catch (e) {
             console.log(e);
         }
         setWavesArray(data);
     }
-
-    // if (ethereum) {
-    //     contract.on("NewWave", (from, timestamp, message) => {
-    //         if (from !== currentAccount) {
-    //             console.log(`New wave from ${from} at ${timestamp}: ${message}`);
-    //             setWavesArray(prev => [...prev, {
-    //                 waver: from,
-    //                 timestamp: timestamp,
-    //                 message: message
-    //             }]);
-    //         } else {
-    //             console.log("Stop spamming yourself");
-    //         }
-    //     });
-    // } else {
-    //     console.log("Connect your wallet.");
-    // }
-
-    useEffect(() => {
-        getWaves();
-    });
 
     return (
         <div>

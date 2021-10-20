@@ -1,12 +1,11 @@
-import { ethers } from "ethers";
 import { useRef } from "react";
-import { useState } from "react/cjs/react.development";
+import { ethers } from "ethers";
 import { useWallet } from "./WalletContext";
 
 export const Wave = () => {
     const {contractAddress, contractABI, setLastWaverAddress} = useWallet();
-    const [isMining, setIsMining] = useState(false);
     const msgText = useRef();
+    let isMining = false;
 
     const sendWave = async (msg) => {
         try {
@@ -19,17 +18,13 @@ export const Wave = () => {
     
             const waveTxn = await wavePortalContract.wave(msg, {gasLimit: 300000});
             console.log("Mining transaction...", waveTxn);
-            setIsMining(true);
+            isMining = true;
     
             await waveTxn.wait();
             console.log("Mined...", waveTxn);
+            console.log('msg...', msg);
+            isMining = false;
             setLastWaverAddress(waveTxn.from);
-    
-            let count = await wavePortalContract.getTotalWaves();
-            console.log("Retrieved total wave count...", count.toNumber());
-
-            console.log(msg);
-            setIsMining(false);
     
           } else {
             console.log("Ethereum object does not exist!");
@@ -39,7 +34,7 @@ export const Wave = () => {
         }
       }
 
-    if (isMining) {
+    if (isMining === true) {
       return (
         <h3 className="miningIndicator">Transaction is being mined.....block times vary.</h3>
       )

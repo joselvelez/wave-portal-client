@@ -2,7 +2,6 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { Wave } from './Wave';
 import { WaveStats } from './WaveStats';
-import { Connect } from './Connect';
 import { useWallet } from './WalletContext';
 import { TotalWaves } from './TotalWaves';
 import { TopWaverAddress } from './TopWaverAddress';
@@ -52,7 +51,7 @@ function App() {
         </div>
 
         <div className="app">
-          {currentAccount ? <Wave /> : <Connect /> }
+          <Wave />
         </div>
 
         <div className="app">
@@ -74,7 +73,7 @@ function App() {
         }
 
         <div className="app">
-          <Transactions />
+          {/* <Transactions /> */}
         </div>
 
       </div>

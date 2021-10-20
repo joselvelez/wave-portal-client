@@ -1,21 +1,20 @@
-import { ethers } from "ethers";
 import { useEffect, useState } from "react"
 import { useWallet } from "./WalletContext";
 
 export const LastWaveTimeStamp = () => {
     const [lastWaveTimeStamp, setLastWaveTimeStamp] = useState();
-    const {contractAddress, contractABI} = useWallet();
-    const { ethereum } = window;
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+    const { contractProvider } = useWallet();
 
     useEffect(() => {
         getLastWaveTimeStamp();
     });
 
     const getLastWaveTimeStamp = async () => {
-        setLastWaveTimeStamp(Date(await contract.getLastWaveAt()));
+        try {
+            setLastWaveTimeStamp(Date(await contractProvider.getLastWaveAt()));
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (

@@ -1,14 +1,9 @@
-import { ethers } from "ethers";
 import { useEffect, useState } from "react"
 import { useWallet } from "./WalletContext";
 
 export const MaxWaves = () => {
     const [maxWaves, setMaxWaves] = useState();
-    const {contractAddress, contractABI} = useWallet();
-    const { ethereum } = window;
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+    const { contractProvider } = useWallet();
 
     useEffect(() => {
         getMaxWaves();
@@ -16,9 +11,9 @@ export const MaxWaves = () => {
 
     const getMaxWaves = async () => {
         try {
-            setMaxWaves(await contract.getMaxWaves());
+            setMaxWaves(await contractProvider.getMaxWaves());
         } catch(e) {
-            console.log('No wallet connected.');
+            console.log(e);
         }
     }
     return maxWaves ? `Most Waves: ${maxWaves}` : 'No waves';
