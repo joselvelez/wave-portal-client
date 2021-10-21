@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { useWallet } from "../WalletContext";
+import { useCallback, useEffect, useState } from "react";
+import { useContract } from "../hooks/useContract";
 
 export const TotalWaves = () => {
-    const { contractProvider } = useWallet();
+    const { contractProvider } = useContract();
     const [totalWaves, setTotalWaves] = useState();
 
-    useEffect(() => {
-        getTotalWaves();
-    });
+    const fetchWaves = useCallback(async () => {
+        const _waves = await contractProvider.getTotalWaves();
+        setTotalWaves(_waves);
+    }, [contractProvider]);
 
-    const getTotalWaves = async () => {
-        try {
-            setTotalWaves(await contractProvider.getTotalWaves());
-        } catch(e) {
-            console.log(e);
-        }
-    }
+    useEffect(() => {
+        fetchWaves()
+            .catch(e => console.log(e));
+        console.log('test');
+    }, [fetchWaves]);
+
     return totalWaves ? `Total Waves: ${totalWaves.toString()}` : 'No waves';
 }

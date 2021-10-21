@@ -1,5 +1,4 @@
 import './App.css';
-import { useEffect, useState } from 'react';
 import { Wave } from './components/Wave';
 import { WaveStats } from './components/WaveStats';
 import { useWallet } from './WalletContext';
@@ -7,9 +6,11 @@ import { TotalWaves } from './components/TotalWaves';
 import { TopWaverAddress } from './components/TopWaverAddress';
 import { MaxWaves } from './components/MaxWaves';
 import { Transactions } from './components/Transaction';
+import { useContract } from './hooks/useContract';
 
 function App() {
-  const {switchTheme, currentAccount, contractAddress} = useWallet();
+  const {switchTheme} = useWallet();
+  const { contractAddress } = useContract();
 
   return (
     <section>
@@ -40,29 +41,27 @@ function App() {
         </div>
 
         <div className="app">
-          {/* <Wave /> */}
+          <Wave />
         </div>
 
         <div className="app">
           <div className="waveStat">
-            {/* <TotalWaves /> */}
+            <TotalWaves />
           </div>
           <div className="waveStat">
-            {/* <TopWaverAddress /> */}
+            <TopWaverAddress />
           </div>
           <div className="waveStat">
-            {/* <MaxWaves /> */}
+            <MaxWaves />
           </div>
         </div>
 
-        {/* {currentAccount ?
-            <div className="app">
-              <WaveStats />
-            </div> : ''          
-        } */}
+        <div className="app">
+          <WaveStats />
+        </div>          
 
         <div className="app">
-          {/* <Transactions /> */}
+          <Transactions />
         </div>
 
       </div>

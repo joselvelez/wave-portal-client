@@ -1,37 +1,19 @@
 import { useRef } from "react";
-import { ethers } from "ethers";
-import { useWallet } from "../WalletContext";
+import { useContract } from "../hooks/useContract";
 
-export const Wave = () => {
-    const {contractAddress, contractABI, setLastWaverAddress} = useWallet();
+export const Wave = ({ changeLastWaver }) => {
+    const { contractSigner } = useContract();
     const msgText = useRef();
     let isMining = false;
 
     const sendWave = async (msg) => {
-        try {
-          const { ethereum } = window;
-    
-          if (ethereum) {
-            const provider = new ethers.providers.Web3Provider(ethereum);
-            const signer = provider.getSigner();
-            const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-    
-            const waveTxn = await wavePortalContract.wave(msg, {gasLimit: 300000});
-            console.log("Mining transaction...", waveTxn);
-            isMining = true;
-    
-            await waveTxn.wait();
-            console.log("Mined...", waveTxn);
-            console.log('msg...', msg);
-            isMining = false;
-            setLastWaverAddress(waveTxn.from);
-    
-          } else {
-            console.log("Ethereum object does not exist!");
-          }    
-        } catch (e) {
-          console.log(e);
-        }
+      const waveTxn = await contractSigner.wave(msg, {gasLimit: 300000});
+      console.log("Mining transaction...", waveTxn);
+      isMining = true;
+      await waveTxn.wait();
+      console.log("Mined...", waveTxn);
+      console.log('msg...', msg);
+      isMining = false;
       }
 
     if (isMining === true) {

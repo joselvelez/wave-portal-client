@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react"
-import { useWallet } from "../WalletContext";
+import { useCallback, useEffect, useState } from "react"
+import { useContract } from "../hooks/useContract";
 
 export const MaxWaves = () => {
     const [maxWaves, setMaxWaves] = useState();
-    const { contractProvider } = useWallet();
+    const { contractProvider } = useContract();
+
+    const fetchMaxWaves = useCallback(async () => {
+        const _maxWaves = await contractProvider.getMaxWaves();
+        setMaxWaves(_maxWaves);
+    }, [contractProvider]);
 
     useEffect(() => {
-        getMaxWaves();
-    });
+        console.log("Loading max waves data.");
+        fetchMaxWaves()
+            .catch(e => console.log(e));
+    }, [fetchMaxWaves]);
 
-    const getMaxWaves = async () => {
-        try {
-            setMaxWaves(await contractProvider.getMaxWaves());
-        } catch(e) {
-            console.log(e);
-        }
-    }
     return maxWaves ? `Most Waves: ${maxWaves}` : 'No waves';
 }
