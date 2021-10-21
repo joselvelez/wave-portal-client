@@ -1,70 +1,43 @@
-import { ethers } from "ethers";
 import React, { useState, useContext, useEffect } from "react";
-import { Connect } from "./Connect";
-import abi from  './utils/WavePortal.json';
 
 const WalletContext = React.createContext();
 
 export function WalletProvider({ children }) {
-  const [currentAccount, setCurrentAccount] = useState();
-  const [lastWaverAddress, setLastWaverAddress] = useState();
-  const [contractProvider, setContractProvider] = useState();
-  const [contractSigner, setContractSigner] = useState();
-  const contractAddress ='0x9f8f0C33E1e75f88DE860682CaBD5504BcD93c93';
-  const contractABI = abi.abi;
-  let provider;
+  const [currentTheme, setTheme] = useState('light');
+
+  const switchTheme = () => {
+    setTheme(currentTheme !== "light" ? "light" : "dark");
+  };
 
   const walletObject = {
-      currentAccount,
-      setCurrentAccount,
-      lastWaverAddress,
-      setLastWaverAddress,
-      contractProvider,
-      contractSigner
+      switchTheme
     };
 
-  const handleAccountsChanged = (accountsArray) => {
-    if (accountsArray.length === 0) {
-      console.log("not accounts bro!");
-    } else if (accountsArray[0] !== currentAccount ) {
-      console.log(`account loaded: ${accountsArray[0]}`);
-      setCurrentAccount(accountsArray[0]);
-    }
-  }
+    useEffect(() => {
+      document.body.setAttribute('theme', currentTheme);
 
-  window.ethereum.on('accountsChanged', handleAccountsChanged);
+      /*
+        When the dapp loads, make sure the user has a wallet installed
+        and the dapp has access to the window.ethereum object
+      */
+      const { ethereum } = window;
 
-  const checkWalletConnection = async () => {
-      if (!window.ethereum) {
-        console.log("You need to install MetaMask");
+      if (ethereum) {
+        console.log("Wallet found. Injecting ethereum object.");
       } else {
+        console.log("'window.etherem' object is not available. Make sure you have a wallet installed.");
+      }      
 
-        let userAccounts = await window.ethereum.request({method: 'eth_accounts'});
-
-        if (currentAccount) {
-          setCurrentAccount(userAccounts[0]);
-          provider = new ethers.providers.Web3Provider(window.ethereum);
-          // setContractProvider(new ethers.Contract(contractAddress, contractABI, provider));
-          // setContractSigner(new ethers.Contract(contractAddress, contractABI, provider.getSigner()));
-        } else {
-          console.log('You need to connect your wallet');
-        }
-      }
-  }
-
-  useEffect(() => {
-    checkWalletConnection();
-    console.log(currentAccount);
-  });
+    }, [currentTheme]);
 
   return (
       <WalletContext.Provider value={walletObject}>
-          {currentAccount ? children : <Connect />}
+          {children}
       </WalletContext.Provider>
   );
 }
 
 export const useWallet = () => {
-    const {currentAccount, setCurrentAccount, lastWaverAddress, setLastWaverAddress, contractProvider, contractSigner} = useContext(WalletContext);
-    return {currentAccount, setCurrentAccount, lastWaverAddress, setLastWaverAddress, contractProvider, contractSigner};
+    const {switchTheme} = useContext(WalletContext);
+    return {switchTheme};
 }

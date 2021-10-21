@@ -4,6 +4,11 @@ export function Connect() {
     const { setCurrentAccount } = useWallet();
     let userAccounts;
 
+    /*
+        Setup dapp initialization flow per EIP 1102 specification
+        https://eips.ethereum.org/EIPS/eip-1102
+    */
+
     const connectWallet = async () => {
         try {
             userAccounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
