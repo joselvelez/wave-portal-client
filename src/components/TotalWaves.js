@@ -13,7 +13,6 @@ export const TotalWaves = () => {
     useEffect(() => {
         fetchWaves()
             .catch(e => console.log(e));
-        console.log('test');
     }, [fetchWaves]);
 
     return totalWaves ? `Total Waves: ${totalWaves.toString()}` : 'No waves';

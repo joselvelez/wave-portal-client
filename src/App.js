@@ -7,9 +7,10 @@ import { TopWaverAddress } from './components/TopWaverAddress';
 import { MaxWaves } from './components/MaxWaves';
 import { Transactions } from './components/Transaction';
 import { useContract } from './hooks/useContract';
+import { Connect } from './components/Connect';
 
 function App() {
-  const {switchTheme} = useWallet();
+  const { switchTheme, currentAccount, } = useWallet();
   const { contractAddress } = useContract();
 
   return (
@@ -41,7 +42,7 @@ function App() {
         </div>
 
         <div className="app">
-          <Wave />
+          {currentAccount ? <Wave /> : <Connect />}
         </div>
 
         <div className="app">

@@ -1,8 +1,7 @@
-import { useWallet } from "./WalletContext";
+import { useWallet } from "../WalletContext";
 
 export function Connect() {
-    const { setCurrentAccount } = useWallet();
-    let userAccounts;
+    const { walletAccessible, setCurrentAccount } = useWallet();
 
     /*
         Setup dapp initialization flow per EIP 1102 specification
@@ -10,14 +9,20 @@ export function Connect() {
     */
 
     const connectWallet = async () => {
-        try {
-            userAccounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        } catch(e) {
-            console.log(e);
+        if (!walletAccessible) {
+            console.log("Wallet not available. dApp should have even made it this far");
+        } else {
+            const ethereum = window.ethereum;
+    
+            try {
+                const userAccounts = await ethereum.request({ method: 'eth_requestAccounts'});
+                console.log('trying to get accounts...');
+                console.log(userAccounts);
+                setCurrentAccount(userAccounts[0]);
+            } catch (e) {
+                console.log(e);
+            }
         }
-
-        console.log("Connected to wallet. Retreiving account.", userAccounts[0]);
-        setCurrentAccount(userAccounts[0]);
     }
 
     return (

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useContract } from "../hooks/useContract";
 
-export const Wave = ({ changeLastWaver }) => {
+export const Wave = () => {
     const { contractSigner } = useContract();
     const msgText = useRef();
     let isMining = false;
