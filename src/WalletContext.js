@@ -18,6 +18,22 @@ export function WalletProvider({ children }) {
       currentAccount
     };
 
+    const { ethereum } = window;
+
+    const fetchAccounts = async () => {
+      const _accounts = await ethereum.request({ method: 'eth_accounts' });
+      try {
+        if (_accounts.length === 0) {
+          console.log("No accounts found");
+        } else {
+          console.log("Found an authorized account.", _accounts[0]);
+          setCurrentAccount(_accounts[0]);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     useEffect(() => {
       document.body.setAttribute('theme', currentTheme);
 
@@ -25,16 +41,17 @@ export function WalletProvider({ children }) {
         When the dapp loads, make sure the user has a wallet installed
         and the dapp has access to the window.ethereum object
       */
-      const { ethereum } = window;
 
       if (ethereum) {
-        console.log("Wallet found. Injecting ethereum object.");
-        setWalletAccessible(true)
+        console.log("Wallet is installed. Injecting ethereum object...");
+        setWalletAccessible(true);
+        fetchAccounts();
+
       } else {
-        console.log("'window.etherem' object is not available. Make sure you have a wallet installed.");
+        console.log("'window.etherem' object is not available. Must have a wallet installed.");
       }      
 
-    }, [currentTheme, currentAccount]);
+    }, [ethereum, currentTheme, currentAccount, fetchAccounts]);
 
   return (
       <WalletContext.Provider value={walletObject}>

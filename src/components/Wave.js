@@ -7,14 +7,21 @@ export const Wave = () => {
     let isMining = false;
 
     const sendWave = async (msg) => {
-      const waveTxn = await contractSigner.wave(msg, {gasLimit: 300000});
-      console.log("Mining transaction...", waveTxn);
-      isMining = true;
-      await waveTxn.wait();
-      console.log("Mined...", waveTxn);
-      console.log('msg...', msg);
-      isMining = false;
+      try {
+        const waveTxn = await contractSigner.wave(msg, {gasLimit: 300000})
+        .catch(e => console.log(e));
+
+        console.log("Mining transaction...", waveTxn);
+        isMining = true;
+        await waveTxn.wait();
+        console.log("Mined...", waveTxn);
+
+        console.log('msg...', msg);
+        isMining = false;
+      } catch (e) {
+        console.log(`Transaction failed. Check contract on etherscan for more information`);
       }
+    }
 
     if (isMining === true) {
       return (

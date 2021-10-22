@@ -5,6 +5,11 @@ export const Transactions = () => {
     const [wavesArray, setWavesArray] = useState([]);
     const { contractProvider } = useContract();
 
+    contractProvider.on("NewWave", (address, timestamp, message) => {
+        console.log(`Yo! New wave from ${address}. Says ${message}.`);
+        fetchWavesArray();
+      });
+
     const fetchWavesArray = useCallback(async () => {
         const _wavesArray = await contractProvider.getWavesArray();
         setWavesArray(_wavesArray);
