@@ -5,20 +5,25 @@ import { useWallet } from './WalletContext';
 import { TotalWaves } from './components/TotalWaves';
 import { TopWaverAddress } from './components/TopWaverAddress';
 import { MaxWaves } from './components/MaxWaves';
-import { Transactions } from './components/Transaction';
+import { Transactions } from './components/Transaction';  
 import { useContract } from './hooks/useContract';
 import { Connect } from './components/Connect';
+// import { networks } from './constants/networks';
 
 function App() {
   const { switchTheme, currentAccount, setCurrentAccount } = useWallet();
-  const { contractAddress } = useContract();
+  const { contractAddress, currentChain, setCurrentChain, walletAccessible } = useContract();
 
   const ethereum = window.ethereum;
 
   const handleAccountChange = (account) => {
     console.log("Changing account");
-    setCurrentAccount(account);
+    setCurrentAccount(account[0]);
   }
+  
+  console.log('address?', currentAccount);
+  console.log('chain?', currentChain);
+  console.log('wallet?', walletAccessible);
 
   ethereum.on('accountsChanged', handleAccountChange);
 

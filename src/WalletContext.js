@@ -4,6 +4,7 @@ const WalletContext = React.createContext();
 
 export function WalletProvider({ children }) {
   const [currentTheme, setTheme] = useState('light');
+  const [currentChain, setCurrentChain] = useState('test');
   const [currentAccount, setCurrentAccount] = useState();
   const [walletAccessible, setWalletAccessible] = useState(false);
 
@@ -15,7 +16,9 @@ export function WalletProvider({ children }) {
       switchTheme,
       setCurrentAccount,
       walletAccessible,
-      currentAccount
+      currentAccount,
+      currentChain,
+      setCurrentChain
     };
 
     const { ethereum } = window;
@@ -34,6 +37,16 @@ export function WalletProvider({ children }) {
       }
     }
 
+    const fetchChainId = async () => {
+      const _chain = await ethereum.request({ method: 'eth_chainId'});
+      try {
+        console.log(`Got chain id: ${_chain}`);
+        setCurrentChain(_chain);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     useEffect(() => {
       document.body.setAttribute('theme', currentTheme);
 
@@ -46,12 +59,13 @@ export function WalletProvider({ children }) {
         console.log("Wallet is installed. Injecting ethereum object...");
         setWalletAccessible(true);
         fetchAccounts();
+        fetchChainId();
 
       } else {
         console.log("'window.etherem' object is not available. Must have a wallet installed.");
       }      
 
-    }, [ethereum, currentTheme, currentAccount, fetchAccounts]);
+    }, [currentTheme, currentAccount, currentChain]);
 
   return (
       <WalletContext.Provider value={walletObject}>
@@ -61,6 +75,6 @@ export function WalletProvider({ children }) {
 }
 
 export const useWallet = () => {
-    const {switchTheme, walletAccessible, setCurrentAccount, currentAccount} = useContext(WalletContext);
-    return {switchTheme, walletAccessible, setCurrentAccount, currentAccount};
+    const {switchTheme, walletAccessible, setCurrentAccount, currentAccount, currentChain, setCurrentChain} = useContext(WalletContext);
+    return {switchTheme, walletAccessible, setCurrentAccount, currentAccount, currentChain, setCurrentChain};
 }
