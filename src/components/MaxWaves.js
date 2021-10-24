@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
-import { useContract } from "../hooks/useContract";
+import { useWallet } from "../WalletContext";
 
 export const MaxWaves = () => {
     const [maxWaves, setMaxWaves] = useState();
-    const { contractProvider } = useContract();
+    const { contractProvider } = useWallet();
 
     const fetchMaxWaves = useCallback(async () => {
         const _maxWaves = await contractProvider.getMaxWaves();

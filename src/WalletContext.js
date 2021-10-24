@@ -1,19 +1,28 @@
 import React, { useState, useContext, useEffect } from "react";
+import { ethers } from "ethers";
+import { contractABI, contractAddress } from "./constants/contractConstants"
 
 const WalletContext = React.createContext();
 
 export function WalletProvider({ children }) {
   const [currentTheme, setTheme] = useState('light');
-  const [currentChain, setCurrentChain] = useState('test');
+  const [currentChain, setCurrentChain] = useState();
   const [currentAccount, setCurrentAccount] = useState();
   const [walletAccessible, setWalletAccessible] = useState(false);
+  const [contractProvider, setContractProvider] = useState();
+  const [contractSigner, setContractSigner] = useState();
+  let provider;
+  let signer;
 
   const switchTheme = () => {
     setTheme(currentTheme !== "light" ? "light" : "dark");
   };
 
-  const walletObject = {
+  const value = {
       switchTheme,
+      contractAddress,
+      contractProvider,
+      contractSigner,
       setCurrentAccount,
       walletAccessible,
       currentAccount,
@@ -40,7 +49,7 @@ export function WalletProvider({ children }) {
     const fetchChainId = async () => {
       const _chain = await ethereum.request({ method: 'eth_chainId'});
       try {
-        console.log(`Got chain id: ${_chain}`);
+        console.log(`Current Chain ID: ${_chain}`);
         setCurrentChain(_chain);
       } catch (e) {
         console.log(e);
@@ -58,23 +67,27 @@ export function WalletProvider({ children }) {
       if (ethereum) {
         console.log("Wallet is installed. Injecting ethereum object...");
         setWalletAccessible(true);
+        provider = new ethers.providers.Web3Provider(window.ethereum)
+        signer = provider.getSigner();
+        setContractProvider(new ethers.Contract(contractAddress, contractABI, provider));
+        setContractSigner(new ethers.Contract(contractAddress, contractABI, signer));
         fetchAccounts();
         fetchChainId();
 
       } else {
         console.log("'window.etherem' object is not available. Must have a wallet installed.");
-      }      
+      }
 
-    }, [currentTheme, currentAccount, currentChain]);
+    }, [currentTheme]);
 
   return (
-      <WalletContext.Provider value={walletObject}>
-          {children}
+      <WalletContext.Provider value={value}>
+        {children}
       </WalletContext.Provider>
   );
 }
 
 export const useWallet = () => {
-    const {switchTheme, walletAccessible, setCurrentAccount, currentAccount, currentChain, setCurrentChain} = useContext(WalletContext);
-    return {switchTheme, walletAccessible, setCurrentAccount, currentAccount, currentChain, setCurrentChain};
+    const {switchTheme, contractAddress, contractProvider, contractSigner, walletAccessible, setWalletAccessible, setCurrentAccount, currentAccount, currentChain, setCurrentChain} = useContext(WalletContext);
+    return {switchTheme, contractAddress, contractProvider, contractSigner, walletAccessible, setWalletAccessible, setCurrentAccount, currentAccount, currentChain, setCurrentChain};
 }

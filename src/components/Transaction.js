@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { useContract } from "../hooks/useContract";
+import { useWallet } from "../WalletContext";
 
 export const Transactions = () => {
     const [wavesArray, setWavesArray] = useState([]);
-    const { contractProvider } = useContract();
+    const { contractProvider } = useWallet();
 
     contractProvider.on("NewWave", (address, timestamp, message) => {
         console.log(`Yo! New wave from ${address}. Says ${message}.`);

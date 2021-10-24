@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
-import { useContract } from "../hooks/useContract";
+import { useWallet } from "../WalletContext";
 
 export const LastWaverAddress = () => {
     const [lastWaverAddress, setLastWaverAddress] = useState();
-    const { contractProvider } = useContract();
+    const { contractProvider } = useWallet();
 
     const fetchLastWaverAddress = useCallback(async () => {
         const _lastWaverAddress = await contractProvider.getLastWaver();

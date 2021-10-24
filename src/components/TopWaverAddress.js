@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
-import { useContract } from "../hooks/useContract";
+import { useWallet } from "../WalletContext";
 
 export const TopWaverAddress = () => {
     const [topWaverAddress, setTopWaverAddress] = useState();
-    const { contractProvider } = useContract();
+    const { contractProvider } = useWallet();
 
     const fetchTopWaverAddress = useCallback(async () => {
         const _topWaverAddress = await contractProvider.getTopWaver();

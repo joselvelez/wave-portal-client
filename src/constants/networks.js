@@ -1,22 +1,27 @@
 export const networks = [
     {
-        0x1: "Ethereum Mainnet",
-        id: 1
+        name: "Ethereum Mainnet",
+        id: 1,
+        hex: '0x1'
     },
     {
-        0x3: "Ropsten Test Network",
-        id: 3
+        name: "Ropsten Test Network",
+        id: 3,
+        hex: '0x3'
     },
     {
-        0x4: "Rinkeby Test Network",
-        id: 4
+        name: "Rinkeby Test Network",
+        id: 4,
+        hex: '0x4'
     },
     {
-        0x5: "Goerli Test Network",
-        id: 5
+        name: "Goerli Test Network",
+        id: 5,
+        hex: '0x5'
     },
     {
-        0x2a: "Kovan Test Network",
-        id: 42
+        name: "Kovan Test Network",
+        id: 42,
+        hex: '0x2a'
     }
 ]
