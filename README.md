@@ -1,5 +1,7 @@
 # Wave Portal dApp
 
+Live Demo [here](https://wave-portal-client.joselvelez.repl.co/)
+
 This dApp is a slight variation of the one built in the [buildspace](https://buildspace.so "buildspace") web3 project. The source for the original project is [here](https://gist.github.com/adilanchian/93fbd2e06b3b5d3acb99b5723cebd925 "here")
 
 The original project kept all of the code in one file and stored a few pieces of state using the useState hook. I felt that in a more typical web3 dapp, a more robust approach to managing application state would be necessary. I wanted to get a better understanding of using other state management techiques while also refactoring most of the logic into seperate components.
