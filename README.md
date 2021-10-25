@@ -5,3 +5,4 @@
 
 #To Do's
 - Fix issue with theme not persisting in local storage. Currently refreshes on reset.
+- Get wave events to reload wave history
