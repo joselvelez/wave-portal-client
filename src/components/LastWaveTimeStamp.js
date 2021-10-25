@@ -1,18 +1,19 @@
-import { useCallback, useEffect, useState } from "react"
-import { useWallet } from "../WalletContext";
+import { useCallback, useEffect, useState, useContext } from "react";
+import AppContext from "../context/app-context";
 
 export const LastWaveTimeStamp = () => {
+    const appContext = useContext(AppContext);
     const [lastWaveTimeStamp, setLastWaveTimeStamp] = useState();
-    const { contractProvider } = useWallet();
 
     const fetchLastWaverTimestamp = useCallback(async () => {
-        const _lastWaverTimestamp = Date(await contractProvider.getLastWaveAt());
+        const _lastWaverTimestamp = Date(await appContext.state.contractProvider.getLastWaveAt());
         setLastWaveTimeStamp(_lastWaverTimestamp);
-    }, [contractProvider]);
+    }, [appContext.state.contractProvider]);
 
     useEffect(() => {
         console.log("Loading last waver time stamp");
-        fetchLastWaverTimestamp();
+        fetchLastWaverTimestamp()
+            .catch(e => console.log(e));
     }, [fetchLastWaverTimestamp]);
 
     return (

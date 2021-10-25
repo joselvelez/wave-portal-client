@@ -1,18 +1,19 @@
-import { useCallback, useEffect, useState } from "react"
-import { useWallet } from "../WalletContext";
+import { useCallback, useEffect, useState, useContext } from "react";
+import AppContext from "../context/app-context";
 
 export const TopWaverAddress = () => {
+    const appContext = useContext(AppContext);
     const [topWaverAddress, setTopWaverAddress] = useState();
-    const { contractProvider } = useWallet();
 
     const fetchTopWaverAddress = useCallback(async () => {
-        const _topWaverAddress = await contractProvider.getTopWaver();
+        const _topWaverAddress = await appContext.state.contractProvider.getTopWaver();
         setTopWaverAddress(_topWaverAddress);
-    }, [contractProvider]);
+    }, [appContext.state.contractProvider]);
 
     useEffect(() => {
         console.log("Loading top waver address");
-        fetchTopWaverAddress();
+        fetchTopWaverAddress()
+            .catch(e => console.log(e));
     }, [fetchTopWaverAddress]);
     
     return topWaverAddress ? `Top Waver Address: ${topWaverAddress}` : 'No waves';

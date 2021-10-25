@@ -5,7 +5,7 @@
 }
 
 /* Light Theme Colors */
-body[theme="light"] {
+body[theme='false'] {
   /* Color variables */
   --color-1: rgb(196, 220, 241);
   --color-2: white;
@@ -17,7 +17,7 @@ body[theme="light"] {
 }
 
 /* Dark Theme colors */
-body[theme="dark"] {
+body[theme='true'] {
   --color-1: #1e1f26;
   --color-2: #292c33;
   --color-3: rgb(39, 40, 42);

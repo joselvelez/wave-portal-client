@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
-import { useWallet } from "../WalletContext";
+import { useCallback, useEffect, useState, useContext } from "react";
+import AppContext from "../context/app-context";
 
 export const TotalWaves = () => {
-    const { contractProvider } = useWallet();
+    const appContext = useContext(AppContext);
     const [totalWaves, setTotalWaves] = useState();
 
     const fetchWaves = useCallback(async () => {
-        const _waves = await contractProvider.getTotalWaves();
+        const _waves = await appContext.state.contractProvider.getTotalWaves();
         setTotalWaves(_waves);
-    }, [contractProvider]);
+    }, [appContext.state.contractProvider]);
 
     useEffect(() => {
         fetchWaves()

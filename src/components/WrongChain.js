@@ -1,30 +1,23 @@
-import { useWallet } from "../WalletContext";
+import { useCallback, useEffect, useState } from "react";
 import { networks } from "../constants/networks";
-import { useCallback, useEffect } from "react";
-import { useState } from "react/cjs/react.development";
 
 export const WrongChain = () => {
-    const [network, setNetwork] = useState([]);
-    const { currentChain } = useWallet();
+    const [network, setNetwork] = useState({});
     const ethereum = window.ethereum;
 
     const fetchNetworks = useCallback(async () => {
         try{
-            console.log(currentChain);
-            const _network = networks.find(i => i.hex === currentChain);
+            const _chain = await ethereum.request({method: 'eth_chainId'});
+            const _network = networks.find(i => i.hex === _chain);
             setNetwork(_network);
-            console.log(_network);
-            console.log('setting');
-            console.log(networks);
         } catch (e) {
             console.log("No network list found.");
         }
-    });
+    }, [ethereum]);
 
     useEffect(() => {
         fetchNetworks();
-        console.log(network);
-    }, [fetchNetworks, network]);
+    }, [ethereum, fetchNetworks]);
 
     ethereum.on('chainChanged', () => {
         window.location.reload();
@@ -32,8 +25,8 @@ export const WrongChain = () => {
 
     return (
         <div>
-            <p>You are currently on the {network} network. You must be on Rinkeby to access this dapp.</p>
-            <p>Connect to Rinkeby and reload the page.</p>
+            <p>You are currently on the {network.name} network. You must be on Rinkeby to access this dapp.</p>
+            <p>Connect to Rinkeby</p>
         </div>
     )
 }

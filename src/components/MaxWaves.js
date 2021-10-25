@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from "react"
-import { useWallet } from "../WalletContext";
+import { useCallback, useEffect, useState, useContext } from "react";
+import AppContext from "../context/app-context";
 
 export const MaxWaves = () => {
+    const appContext = useContext(AppContext);
     const [maxWaves, setMaxWaves] = useState();
-    const { contractProvider } = useWallet();
 
     const fetchMaxWaves = useCallback(async () => {
-        const _maxWaves = await contractProvider.getMaxWaves();
+        const _maxWaves = await appContext.state.contractProvider.getMaxWaves();
         setMaxWaves(_maxWaves);
-    }, [contractProvider]);
+    }, [appContext.state.contractProvider]);
 
     useEffect(() => {
         console.log("Loading max waves data.");

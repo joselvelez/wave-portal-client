@@ -1,11 +1,11 @@
 import './App.css';
-import AppStateProvider from './context/AppStateProvider';
-import { Test } from './components/Test';
+import AppStateProvider from '../../context/AppStateProvider';
+import { Main } from '../Main';
 
 function App() {
   return (
     <AppStateProvider>
-      <Test />
+      <Main />
     </AppStateProvider>
   );
 }

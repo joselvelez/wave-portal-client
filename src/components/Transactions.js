@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
-import { useWallet } from "../WalletContext";
+import { useCallback, useEffect, useState, useContext } from "react";
+import AppContext from "../context/app-context";
 
 export const Transactions = () => {
+    const appContext = useContext(AppContext);
     const [wavesArray, setWavesArray] = useState([]);
-    const { contractProvider } = useWallet();
 
-    contractProvider.on("NewWave", (address, timestamp, message) => {
+    appContext.state.contractProvider.on("NewWave", (address, timestamp, message) => {
         console.log(`Yo! New wave from ${address}. Says ${message}.`);
         fetchWavesArray();
       });
 
     const fetchWavesArray = useCallback(async () => {
-        const _wavesArray = await contractProvider.getWavesArray();
+        const _wavesArray = await appContext.state.contractProvider.getWavesArray();
         setWavesArray(_wavesArray);
-    }, [contractProvider]);
+    }, [appContext.state.contractProvider]);
 
     useEffect(() => {
         console.log("Loading wave history...");

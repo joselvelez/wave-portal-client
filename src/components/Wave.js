@@ -1,14 +1,14 @@
-import { useRef } from "react";
-import { useWallet } from "../WalletContext";
+import { useRef, useContext } from "react";
+import AppContext from "../context/app-context";
 
 export const Wave = () => {
-  const { contractSigner } = useWallet();
+  const appContext = useContext(AppContext);
   const msgText = useRef();
   let isMining = false;
 
   const sendWave = async (msg) => {
     try {
-      const waveTxn = await contractSigner.wave(msg, {gasLimit: 300000})
+      const waveTxn = await appContext.state.contractSigner.wave(msg, {gasLimit: 300000})
       .catch(e => console.log(e));
 
       console.log("Mining transaction...", waveTxn);

@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from "react"
-import { useWallet } from "../WalletContext";
+import { useCallback, useEffect, useState, useContext } from "react"
+import AppContext from "../context/app-context";
 
 export const LastWaverAddress = () => {
+    const appContext = useContext(AppContext);    
     const [lastWaverAddress, setLastWaverAddress] = useState();
-    const { contractProvider } = useWallet();
 
     const fetchLastWaverAddress = useCallback(async () => {
-        const _lastWaverAddress = await contractProvider.getLastWaver();
+        const _lastWaverAddress = await appContext.state.contractProvider.getLastWaver();
         setLastWaverAddress(_lastWaverAddress);
-    }, [contractProvider]);
+    }, [appContext.state.contractProvider]);
 
     useEffect(() => {
         console.log("Loading last waver address");
