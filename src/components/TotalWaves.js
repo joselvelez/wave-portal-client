@@ -1,19 +1,26 @@
-import { useCallback, useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import AppContext from "../context/app-context";
 
 export const TotalWaves = () => {
     const appContext = useContext(AppContext);
     const [totalWaves, setTotalWaves] = useState();
 
-    const fetchWaves = useCallback(async () => {
-        const _waves = await appContext.state.contractProvider.getTotalWaves();
-        setTotalWaves(_waves);
-    }, [appContext.state.contractProvider]);
+    appContext.state.contractProvider.on('NewWave', (from, timestamp, msg) => {
+        fetchWaves();
+    });
+
+    const fetchWaves = async () => {
+        try {
+            const _waves = await appContext.state.contractProvider.getTotalWaves();
+            setTotalWaves(_waves);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     useEffect(() => {
-        fetchWaves()
-            .catch(e => console.log(e));
-    }, [fetchWaves]);
+        fetchWaves();
+    }, []);
 
     return totalWaves ? `Total Waves: ${totalWaves.toString()}` : 'No waves';
 }

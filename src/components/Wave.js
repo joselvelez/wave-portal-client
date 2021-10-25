@@ -1,10 +1,10 @@
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import AppContext from "../context/app-context";
 
 export const Wave = () => {
   const appContext = useContext(AppContext);
+  const [isMining, setIsMining] = useState(false);
   const msgText = useRef();
-  let isMining = false;
 
   const sendWave = async (msg) => {
     try {
@@ -12,12 +12,11 @@ export const Wave = () => {
       .catch(e => console.log(e));
 
       console.log("Mining transaction...", waveTxn);
-      isMining = true;
+      setIsMining(true);
       await waveTxn.wait();
-      console.log("Mined...", waveTxn);
-
-      console.log('msg...', msg);
-      isMining = false;
+      console.log("Transaction mined successfully!", waveTxn);
+      console.log('Message: ', msg);
+      setIsMining(false);
     } catch (e) {
       console.log(`Transaction failed. Check contract on etherscan for more information`);
     }

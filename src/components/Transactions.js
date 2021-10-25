@@ -1,25 +1,27 @@
-import { useCallback, useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import AppContext from "../context/app-context";
 
 export const Transactions = () => {
     const appContext = useContext(AppContext);
     const [wavesArray, setWavesArray] = useState([]);
 
-    appContext.state.contractProvider.on("NewWave", (address, timestamp, message) => {
-        console.log(`Yo! New wave from ${address}. Says ${message}.`);
+    appContext.state.contractProvider.on('NewWave', (from, timestamp, msg) => {
         fetchWavesArray();
-      });
+    });
 
-    const fetchWavesArray = useCallback(async () => {
-        const _wavesArray = await appContext.state.contractProvider.getWavesArray();
-        setWavesArray(_wavesArray);
-    }, [appContext.state.contractProvider]);
+    const fetchWavesArray = async () => {
+        try {
+            const _wavesArray = await appContext.state.contractProvider.getWavesArray();
+            setWavesArray(_wavesArray);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     useEffect(() => {
         console.log("Loading wave history...");
-        fetchWavesArray()
-            .catch(e => {console.log(e)})
-    }, [fetchWavesArray]);
+        fetchWavesArray();
+    }, []);
 
     return (
         <div>

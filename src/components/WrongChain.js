@@ -1,11 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { networks } from "../constants/networks";
 
 export const WrongChain = () => {
     const [network, setNetwork] = useState({});
     const ethereum = window.ethereum;
 
-    const fetchNetworks = useCallback(async () => {
+    ethereum.on('chainChanged', () => {
+        window.location.reload();
+    });
+
+    const fetchNetworks = async () => {
         try{
             const _chain = await ethereum.request({method: 'eth_chainId'});
             const _network = networks.find(i => i.hex === _chain);
@@ -13,15 +17,11 @@ export const WrongChain = () => {
         } catch (e) {
             console.log("No network list found.");
         }
-    }, [ethereum]);
+    };
 
     useEffect(() => {
         fetchNetworks();
-    }, [ethereum, fetchNetworks]);
-
-    ethereum.on('chainChanged', () => {
-        window.location.reload();
-    })
+    }, []);
 
     return (
         <div>
