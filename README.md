@@ -16,7 +16,7 @@ The problem I ran into was that for someone like me who was new to react, solidi
 
 > At a high level, web3-react is a state machine which ensures that certain key pieces of data (the user's current account, for example) relevant to your dApp are kept up-to-date.
 
-With this in mind, I decided that I wanted to build my own "state machine", because it would force me to understand and apply the same concepts. Of course my idea and implementation of a state machine would be much more primitive and outside of academic pursuits, I would just use an existing library or framework like the ones I mentioned above.
+With this in mind, I decided that I wanted to build my own "state machine", because it would force me to understand and apply the same concepts. Of course my idea and implementation of a state machine would be much more primitive and, outside of academic pursuits, I would just use an existing library or framework like the ones I mentioned above.
 
 Building this was very challenging and frustrating, but also rewarding. Even after getting to a point where I am happy enough to move forward, I could easily spend more time optimizing/refactoring/debugging this. But that is not the point of this excercise. I just wanted to get exposure to the underbelly of state management before using a library or framework that abstracts it away from me.
 
