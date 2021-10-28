@@ -37,5 +37,6 @@ This is basically a create-react-app project with a few additional folders and f
         * **networks.js** - a list of network objects that I use for checking what network the user's wallet is connected to
         * **contractConstants.js** - used to store the location of the contract ABI and the currently deployed contract address
     * *components directory* - where all of the components will live.
+		* *core directory* - core components necessary are kept here. You can delete all of the components in the main components directory.
 
 I hope other folks just getting into react/web3 might find this helpful. If you find issues or have suggestions, please let me know!
