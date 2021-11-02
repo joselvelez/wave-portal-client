@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import AppContext from "../../context/app-context";
+import { ConnectWalletAction } from "./ConnectWalletAction";
 
 export function Connect() {
     const appContext = useContext(AppContext);
@@ -14,19 +15,15 @@ export function Connect() {
 
         try {
             const userAccounts = await ethereum.request({ method: 'eth_requestAccounts'});
-            console.log('trying to get accounts...');
-            console.log(userAccounts);
-            appContext.getAccounts(userAccounts[0])
+            console.log('Connecting, fetching accounts...');
+            console.log("Account found: ", userAccounts);
+            appContext.getAccounts(userAccounts[0]);
         } catch (e) {
             console.log(e);
         }
     }
 
     return (
-        <>
-        <button className="btnConnectWallet" onClick={connect}>
-            Connect your wallet
-        </button>
-        </>
+        <ConnectWalletAction connectAction={connect} />
     )
 }
