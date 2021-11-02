@@ -45,6 +45,7 @@ const AppStateProvider = ({ children }) => {
 
     // dispatch method to check if a wallet is installed
     const walletInstalled = () => {
+        console.log("Wallet found");
         dispatch({
             type: WALLET_INSTALLED,
             payload: true,

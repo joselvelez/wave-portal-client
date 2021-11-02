@@ -12,15 +12,14 @@ import { Transactions } from '../Transactions';
 
 export const Content = () => {
   const appContext = useContext(AppContext);
-  const ethereum = window.ethereum;
 
   // Handle wallet events (Docs @ https://docs.metamask.io/guide/ethereum-provider.html#events)
-  ethereum.on('accountsChanged', (accounts) => {
+  window.ethereum.on('accountsChanged', (accounts) => {
   console.log("Changing account");
   appContext.getAccounts(accounts)
   });
 
-  ethereum.on('chainChanged', (chainId) => {
+  window.ethereum.on('chainChanged', (chainId) => {
   console.log(`Switching chains to ${chainId}`);
   appContext.getChain(chainId);
   window.location.reload();

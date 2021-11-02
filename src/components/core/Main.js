@@ -7,13 +7,12 @@ import { WrongChain } from './WrongChain';
 
 export const Main = () => {
     const appContext = useContext(AppContext);
-    const ethereum = window.ethereum;
-    console.log(appContext);
 
     const fetchAccounts = async () => {
         try {
-            const _accounts = await ethereum.request({ method: 'eth_accounts'});
+            const _accounts = await window.ethereum.request({ method: 'eth_accounts'});
             if (_accounts !== window.localStorage.getItem("lastAccount")) {
+                console.log("Fetching account");
                 appContext.getAccounts(_accounts);
             }
         } catch (e) {
@@ -23,7 +22,8 @@ export const Main = () => {
 
     const fetchChain = async () => {
         try {
-            const _chain = await ethereum.request({method: 'eth_chainId'});
+            const _chain = await window.ethereum.request({method: 'eth_chainId'});
+            console.log("Fetching network information");
             appContext.getChain(_chain);
         } catch (e) {
             console.log("No chain found");
@@ -31,7 +31,7 @@ export const Main = () => {
     }
 
     useEffect(() => {
-        if (typeof(ethereum) !== 'undefined') {
+        if (typeof(window.ethereum) !== 'undefined') {
             appContext.walletInstalled();
             fetchAccounts()
             fetchChain();
