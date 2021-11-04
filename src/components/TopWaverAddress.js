@@ -1,27 +1,23 @@
-import { useEffect, useState, useContext } from "react";
-import AppContext from "../context/app-context";
+import { useEffect, useState } from "react";
+import { fetchTopWaverAddress, getContractProvider } from "../contracts/contractAPI";
 
 export const TopWaverAddress = () => {
-    const appContext = useContext(AppContext);
     const [topWaverAddress, setTopWaverAddress] = useState();
+    const provider = getContractProvider();
 
-    appContext.state.contractProvider.on('NewWave', (from, timestamp, msg) => {
+    provider.on('NewWave', (from, timestamp, msg) => {
         fetchTopWaverAddress();
     });
 
-    const fetchTopWaverAddress = async () => {
-        try {
-            const _topWaverAddress = await appContext.state.contractProvider.getTopWaver();
-            setTopWaverAddress(_topWaverAddress);
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
     useEffect(() => {
         console.log("Loading top waver address");
-        fetchTopWaverAddress()
+        loadTopwaverAddress();
     }, []);
+
+    async function loadTopwaverAddress() {
+        const _topWaverAddress = await fetchTopWaverAddress();
+        setTopWaverAddress(_topWaverAddress);
+    }
     
     return topWaverAddress ? `Top Waver Address: ${topWaverAddress}` : 'No waves';
 }

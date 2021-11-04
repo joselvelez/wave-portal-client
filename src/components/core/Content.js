@@ -1,35 +1,21 @@
-// Core Imports Begin
-import { useContext } from 'react';
 import { contractAddress } from '../../constants/contractConstants';
-import AppContext from '../../context/app-context';
-// Core Imports End
+import ThemeContext from '../../context/ThemeContext';
 import { Wave } from '../Wave';
 import { WaveStats } from '../WaveStats';
 import { TotalWaves } from '../TotalWaves';
 import { TopWaverAddress } from '../TopWaverAddress';
 import { MaxWaves } from '../MaxWaves';
 import { Transactions } from '../Transactions';
+import { useContext } from 'react';
 
 export const Content = () => {
-  const appContext = useContext(AppContext);
-
-  // Handle wallet events (Docs @ https://docs.metamask.io/guide/ethereum-provider.html#events)
-  window.ethereum.on('accountsChanged', (accounts) => {
-  console.log("Changing account");
-  appContext.getAccounts(accounts)
-  });
-
-  window.ethereum.on('chainChanged', (chainId) => {
-  console.log(`Switching chains to ${chainId}`);
-  appContext.getChain(chainId);
-  window.location.reload();
-  });
+  const themeContext = useContext(ThemeContext);
 
   return (
     <section>
 
       <div className="theme-switcher">
-        <input className="switcherInput" type="checkbox" id="switcher" onChange={() => appContext.setTheme(!appContext.state.darkTheme)} />
+        <input className="switcherInput" type="checkbox" id="switcher" onChange={() => themeContext.setTheme(!themeContext.currentTheme)} />
         <label className="switcherLabel" htmlFor="switcher">Switch</label>
       </div>
       

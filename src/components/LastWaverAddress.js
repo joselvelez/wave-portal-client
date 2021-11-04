@@ -1,27 +1,23 @@
-import { useEffect, useState, useContext } from "react"
-import AppContext from "../context/app-context";
+import { useEffect, useState } from "react";
+import { fetchLastWaverAddress, getContractProvider } from "../contracts/contractAPI";
 
 export const LastWaverAddress = () => {
-    const appContext = useContext(AppContext);    
     const [lastWaverAddress, setLastWaverAddress] = useState();
+    const provider = getContractProvider();
 
-    appContext.state.contractProvider.on('NewWave', (from, timestamp, msg) => {
-        fetchLastWaverAddress();
+    provider.on('NewWave', (from, timestamp, msg) => {
+        loadLastWaverAddress();
     });
-
-    const fetchLastWaverAddress = async () => {
-        try {
-            const _lastWaverAddress = await appContext.state.contractProvider.getLastWaver();
-            setLastWaverAddress(_lastWaverAddress);
-        } catch (e) {
-            console.log(e);
-        }
-    };
 
     useEffect(() => {
         console.log("Loading last waver address");
-        fetchLastWaverAddress()
+        loadLastWaverAddress();
     }, []);
+
+    async function loadLastWaverAddress() {
+        const _lastWaverAddress = await fetchLastWaverAddress();
+        setLastWaverAddress(_lastWaverAddress);
+    }
 
     return (
         <div>

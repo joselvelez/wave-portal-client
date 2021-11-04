@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
-import AppContext from '../../context/app-context';
+import { useContext } from 'react';
+import AppContext from '../../context/WalletContext';
 import { Connect } from './Connect';
 import { Content } from './Content';
 import { NoWallet } from './NoWallet';
@@ -7,36 +7,6 @@ import { WrongChain } from './WrongChain';
 
 export const Main = () => {
     const appContext = useContext(AppContext);
-
-    const fetchAccounts = async () => {
-        try {
-            const _accounts = await window.ethereum.request({ method: 'eth_accounts'});
-            if (_accounts !== window.localStorage.getItem("lastAccount")) {
-                console.log("Fetching account");
-                appContext.getAccounts(_accounts);
-            }
-        } catch (e) {
-            console.log("No wallet detected");
-        };
-    };
-
-    const fetchChain = async () => {
-        try {
-            const _chain = await window.ethereum.request({method: 'eth_chainId'});
-            console.log("Fetching network information");
-            appContext.getChain(_chain);
-        } catch (e) {
-            console.log("No chain found");
-        }
-    }
-
-    useEffect(() => {
-        if (typeof(window.ethereum) !== 'undefined') {
-            appContext.walletInstalled();
-            fetchAccounts()
-            fetchChain();
-        }
-    }, []);
 
     /*
         Do some pre-checks before rendering the app.

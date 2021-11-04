@@ -1,26 +1,22 @@
-import { useEffect, useState, useContext } from "react";
-import AppContext from "../context/app-context";
+import { useEffect, useState } from "react";
+import { fetchTotalWaves, getContractProvider } from "../contracts/contractAPI";
 
 export const TotalWaves = () => {
-    const appContext = useContext(AppContext);
     const [totalWaves, setTotalWaves] = useState();
+    const provider = getContractProvider();
 
-    appContext.state.contractProvider.on('NewWave', (from, timestamp, msg) => {
-        fetchWaves();
+    provider.on('NewWave', (from, timestamp, msg) => {
+        loadTotalWaves();
     });
 
-    const fetchWaves = async () => {
-        try {
-            const _waves = await appContext.state.contractProvider.getTotalWaves();
-            setTotalWaves(_waves);
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
     useEffect(() => {
-        fetchWaves();
+        loadTotalWaves();
     }, []);
+
+    async function loadTotalWaves() {
+        const _totalWaves = await fetchTotalWaves();
+        setTotalWaves(_totalWaves);
+    }
 
     return totalWaves ? `Total Waves: ${totalWaves.toString()}` : 'No waves';
 }

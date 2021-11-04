@@ -1,27 +1,23 @@
-import { useEffect, useState, useContext } from "react";
-import AppContext from "../context/app-context";
+import { useEffect, useState } from "react";
+import { fetchMaxWaves, getContractProvider } from "../contracts/contractAPI";
 
 export const MaxWaves = () => {
-    const appContext = useContext(AppContext);
-    const [maxWaves, setMaxWaves] = useState();
+    const [maxWaves, setMaxWaves] = useState(null);
+    const provider = getContractProvider();
 
-    appContext.state.contractProvider.on('NewWave', (from, timestamp, msg) => {
-        fetchMaxWaves();
+    provider.on('NewWave', (from, timestamp, msg) => {
+        loadMaxWaves();
     });
-
-    const fetchMaxWaves = async () => {
-        try {
-            const _maxWaves = await appContext.state.contractProvider.getMaxWaves();
-            setMaxWaves(_maxWaves);
-        } catch (e) {
-            console.log(e);
-        }
-    };
 
     useEffect(() => {
         console.log("Loading max waves data.");
-        fetchMaxWaves()
+        loadMaxWaves();
     }, []);
 
-    return maxWaves ? `Most Waves: ${maxWaves}` : 'No waves';
+    async function loadMaxWaves() {
+        const _maxWaves = await fetchMaxWaves();
+        setMaxWaves(_maxWaves);
+    }
+
+    return maxWaves ? `Most Waves: ${maxWaves}` : 'No max waves';
 }

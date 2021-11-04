@@ -1,12 +1,7 @@
-import { CONNECT_WALLET, GET_ACCOUNTS, SET_CONTRACT_PROVIDER, SET_CONTRACT_SIGNER, SET_THEME, WALLET_INSTALLED, GET_CHAIN } from './app-actions';
+import { CONNECT_WALLET, GET_ACCOUNTS, WALLET_INSTALLED, GET_CHAIN } from './walletActions';
 
-export const appReducer = (state, action) => {
+export const walletReducer = (state, action) => {
     switch (action.type) {
-        case SET_THEME:
-            return {
-                ...state,
-                darkTheme: action.payload,
-            };
         case WALLET_INSTALLED:
             return {
                 ...state,
@@ -26,16 +21,6 @@ export const appReducer = (state, action) => {
             return {
                 ...state,
                 currentChain: action.payload,
-            }
-        case SET_CONTRACT_PROVIDER:
-            return {
-                ...state,
-                contractProvider: action.payload,
-            }
-        case SET_CONTRACT_SIGNER:
-            return {
-                ...state,
-                contractSigner: action.payload,
             }
         default:
             return state;

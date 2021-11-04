@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import AppContext from "../../context/app-context";
+import AppContext from "../../context/WalletContext";
 import { ConnectWalletAction } from "./ConnectWalletAction";
 
 export function Connect() {

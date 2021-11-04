@@ -1,27 +1,23 @@
-import { useEffect, useState, useContext } from "react";
-import AppContext from "../context/app-context";
+import { useEffect, useState } from "react";
+import { fetchLastWaverTimestamp, getContractProvider } from "../contracts/contractAPI";
 
 export const LastWaveTimeStamp = () => {
-    const appContext = useContext(AppContext);
     const [lastWaveTimeStamp, setLastWaveTimeStamp] = useState();
+    const provider = getContractProvider();
 
-    appContext.state.contractProvider.on('NewWave', (from, timestamp, msg) => {
-        fetchLastWaverTimestamp();
+    provider.on('NewWave', (from, timestamp, msg) => {
+        loadLastWaverTimestamp();
     });
-
-    const fetchLastWaverTimestamp = async () => {
-        try {
-            const _lastWaverTimestamp = Date(await appContext.state.contractProvider.getLastWaveAt());
-            setLastWaveTimeStamp(_lastWaverTimestamp);
-        } catch (e) {
-            console.log(e);
-        }
-    };
 
     useEffect(() => {
         console.log("Loading last waver time stamp");
-        fetchLastWaverTimestamp()
+        loadLastWaverTimestamp();
     }, []);
+
+    async function loadLastWaverTimestamp() {
+        const _lastWaverTimestamp = await fetchLastWaverTimestamp();
+        setLastWaveTimeStamp(_lastWaverTimestamp);
+    }
 
     return (
         <div>

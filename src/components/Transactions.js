@@ -1,33 +1,29 @@
-import { useEffect, useState, useContext } from "react";
-import AppContext from "../context/app-context";
+import { useEffect, useState } from "react";
+import { fetchWaveTransactions, getContractProvider } from "../contracts/contractAPI";
 
 export const Transactions = () => {
-    const appContext = useContext(AppContext);
-    const [wavesArray, setWavesArray] = useState([]);
+    const [waveTransactions, setWaveTransactions] = useState([]);
+    const provider = getContractProvider();
 
-    appContext.state.contractProvider.on('NewWave', (from, timestamp, msg) => {
-        fetchWavesArray();
+    provider.on('NewWave', (from, timestamp, msg) => {
+        loadWaveTransactions();
     });
-
-    const fetchWavesArray = async () => {
-        try {
-            const _wavesArray = await appContext.state.contractProvider.getWavesArray();
-            setWavesArray(_wavesArray);
-        } catch (e) {
-            console.log(e);
-        }
-    };
 
     useEffect(() => {
         console.log("Loading wave history...");
-        fetchWavesArray();
+        loadWaveTransactions();
     }, []);
+
+    async function loadWaveTransactions() {
+        const _waveTransactions = await fetchWaveTransactions();
+        setWaveTransactions(_waveTransactions);
+    }
 
     return (
         <div>
-            {wavesArray ? 
+            {waveTransactions ? 
                 <div>
-                    {wavesArray.map((item, index) => {
+                    {waveTransactions.map((item, index) => {
                         return (
                             <div key={index} className="waveHistory">
                                 <div className="waver">
