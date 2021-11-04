@@ -18,19 +18,27 @@ export const Main = () => {
 
     if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length > 0 && appContext.state.currentChain === '0x4') {
         return (
-            <Content />
+            <div>
+                <Content />
+            </div>
         );
     } else if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length === 0) {
         return (
-            <Connect />
+            <div>
+                <Connect />
+            </div>
         )
     } else if (appContext.state.walletInstalled === false) {
         return (
-            <NoWallet />
+            <div>
+                <NoWallet />
+            </div>
         )
     } else if (appContext.state.walletInstalled === true && appContext.state.currentChain !== '0x4') {
         return (
-            <WrongChain />
+            <div>
+                <WrongChain />
+            </div>
         )
     }
 }
