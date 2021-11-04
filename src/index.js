@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import App from './components/core/App';
 import { Main } from './components/core/Main';
 import { ThemeProvider } from './context/ThemeProvider';
 import WalletProvider from './context/WalletProvider';

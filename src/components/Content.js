@@ -1,11 +1,11 @@
-import { contractAddress } from '../../constants/contractConstants';
-import ThemeContext from '../../context/ThemeContext';
-import { Wave } from '../Wave';
-import { WaveStats } from '../WaveStats';
-import { TotalWaves } from '../TotalWaves';
-import { TopWaverAddress } from '../TopWaverAddress';
-import { MaxWaves } from '../MaxWaves';
-import { Transactions } from '../Transactions';
+import { contractAddress } from '../constants/contractConstants';
+import ThemeContext from '../context/ThemeContext';
+import { Wave } from './Wave';
+import { WaveStats } from './WaveStats';
+import { TotalWaves } from './TotalWaves';
+import { TopWaverAddress } from './TopWaverAddress';
+import { MaxWaves } from './MaxWaves';
+import { Transactions } from './Transactions';
 import { useContext } from 'react';
 
 export const Content = () => {

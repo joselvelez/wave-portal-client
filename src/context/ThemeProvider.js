@@ -7,15 +7,17 @@ export const ThemeProvider = ({ children }) => {
     useLayoutEffect(() => {
         if (currentTheme === JSON.parse(window.localStorage.getItem('theme'))) {
             document.body.setAttribute('theme', currentTheme);
+        } else if (window.localStorage.getItem('theme') === null) {
+            document.body.setAttribute('theme', currentTheme);
         } else {
-            setCurrentTheme(JSON.parse(window.localStorage.getItem('theme')));
-            document.body.setAttribute('theme', window.localStorage.getItem('theme'));
+            document.body.setAttribute('theme', JSON.parse(window.localStorage.getItem('theme')));
+            setCurrentTheme(JSON.parse(document.body.getAttribute('theme')));
         }
     }, [currentTheme]);
 
     function setTheme(_newTheme) {
         window.localStorage.setItem('theme', _newTheme)
-        setCurrentTheme('bad');
+        setCurrentTheme(_newTheme);
     }
 
     const value = {setTheme, currentTheme};

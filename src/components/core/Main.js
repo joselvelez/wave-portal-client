@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import AppContext from '../../context/WalletContext';
 import { Connect } from './Connect';
-import { Content } from './Content';
+import { Content } from '../Content';
 import { NoWallet } from './NoWallet';
 import { WrongChain } from './WrongChain';
 

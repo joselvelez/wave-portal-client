@@ -1,6 +1,6 @@
 # Wave Portal dApp
 
-Live Demo [here](https://wave-portal-client.joselvelez.repl.co/)
+Live Demo [here](https://wave-portal.onrender.com/)
 
 This dApp is a slight variation of the one built in the [buildspace](https://buildspace.so "buildspace") web3 project. The source for the original project is [here](https://gist.github.com/adilanchian/93fbd2e06b3b5d3acb99b5723cebd925 "here")
 
@@ -27,16 +27,22 @@ Below is a summary of what I am using under the hood and how I would modify it f
 ## Basic Structure
 This is basically a create-react-app project with a few additional folders and files.
 * src directory
-	* *contracts directory* - drop in the contract ABI(s) that your app will be interacting with.
+	* *contracts directory*
+		* **YourContract.json** - drop in the contract ABI(s) that your app will be interacting with.
+		* **contractAPI.js** - All of the methods used against your contract. Import and call them from inside your components.
 	* *context directory* - files related to global state management. I am using useReducer for global state.
-		* **app-actions.js** - a list of each dispacth action your reducer will use. This is to help the code editor autocomplete and avoid spelling issues.
-		* **app-context.js** - a simple 3 line module that creates the context and exports it for use
-		* **app-reducer.js** - the reducer function. This handles the actual logic for setting/updating the state
-		* **AppStateprovider.js** - this is the component that will wrap a provider around the child components. Everything inside of this component will have access to the global state. This is where the reducer function is implemented and each of the various dispatch methods are called for setting the state.
+		* **ThemeContext.js** - Context for custom global theme.
+		* **ThemeProvider.js** - Theme context provider used to wrap around your application.
+		* **walletActions.js** - a list of dispacth actions your reducer will use. This is to help the code editor autocomplete and avoid spelling issues.
+		* **walletAPI.js** - methods used to perform blockchain related called like getting the network and current account.
+		* **WalletContext.js** - global context for wallet information
+		* **WalletProvider.js** - wallet context provider used to wrap around your application.
+		* **walletReducer.js** - the reducer function. This handles the actual logic for setting/updating the state.
 	* *constants directory* - this is where I drop in constants that do not change but need to be provided to the app.
         * **networks.js** - a list of network objects that I use for checking what network the user's wallet is connected to
         * **contractConstants.js** - used to store the location of the contract ABI and the currently deployed contract address
     * *components directory* - where all of the components will live.
-		* *core directory* - core components necessary are kept here. You can delete all of the components in the main components directory.
+		* *core directory* - core components necessary are kept here. You can delete all of the components in the main components directory except Content.js. This is where you would begin adding your components. Take a look at Main.js in core directory to see logic.
+
 
 I hope other folks just getting into react/web3 might find this helpful. If you find issues or have suggestions, please let me know!
