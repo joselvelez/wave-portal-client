@@ -22,6 +22,8 @@ export const getContractProvider = () => {
     }
 }
 
+/* Drop your custom contract logic below here */
+
 export const fetchMaxWaves = async () => {
     try {
         const _provider = getContractProvider();
