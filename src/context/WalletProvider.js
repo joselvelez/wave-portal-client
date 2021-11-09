@@ -1,7 +1,7 @@
 import { useReducer, useEffect } from "react";
 import { GET_ACCOUNTS, GET_CHAIN, WALLET_INSTALLED } from "./walletActions";
 import { fetchAccounts, fetchChain } from "./walletAPI";
-import WalletContext from "./WalletContext";
+import { WalletContext } from "./WalletContext";
 import { walletReducer } from "./walletReducer";
 
 const WalletProvider = ({ children }) => {

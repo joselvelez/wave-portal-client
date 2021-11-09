@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import AppContext from "../../context/WalletContext";
+import { WalletContext } from '../../context/WalletContext';
 import { ConnectWalletAction } from "./ConnectWalletAction";
 
 export function Connect() {
-    const appContext = useContext(AppContext);
+    const appContext = useContext(WalletContext);
 
     /*
         Setup dapp initialization flow per EIP 1102 specification

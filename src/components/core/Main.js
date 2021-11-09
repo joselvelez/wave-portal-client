@@ -1,12 +1,13 @@
 import { useContext } from 'react';
-import AppContext from '../../context/WalletContext';
+import { WalletContext } from '../../context/WalletContext';
 import { Connect } from './Connect';
 import { Content } from '../Content';
 import { NoWallet } from './NoWallet';
 import { WrongChain } from './WrongChain';
+import { configuredChain } from '../../constants/networks';
 
 export const Main = () => {
-    const appContext = useContext(AppContext);
+    const appContext = useContext(WalletContext);
 
     /*
         Do some pre-checks before rendering the app.
@@ -16,28 +17,36 @@ export const Main = () => {
         4. Check if a wallet is installed, connected AND on the correct network (pass go :) )
     */
 
-    if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length > 0 && appContext.state.currentChain === '0x4') {
+    if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length > 0 && appContext.state.currentChain === configuredChain) {
         return (
-            <div>
-                <Content />
+            <div className="bg-gray-900 h-full p-5">
+                <div className="md:container md:mx-auto">
+                    <Content />
+                </div>
             </div>
         );
-    } else if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length === 0) {
+    } else if (appContext.state.walletInstalled === true && appContext.state.currentAccount.length === 0 && appContext.state.currentChain === configuredChain) {
         return (
-            <div>
-                <Connect />
+            <div className="bg-gray-900 h-full p-5">
+                <div className="md:container md:mx-auto text-white">
+                    <Connect />
+                </div>
             </div>
         )
     } else if (appContext.state.walletInstalled === false) {
         return (
-            <div>
-                <NoWallet />
+            <div className="bg-gray-900 h-full p-5">
+                <div className="md:container md:mx-auto text-white">
+                    <NoWallet />
+                </div>
             </div>
         )
-    } else if (appContext.state.walletInstalled === true && appContext.state.currentChain !== '0x4') {
+    } else if (appContext.state.walletInstalled === true && appContext.state.currentChain !== configuredChain) {
         return (
-            <div>
-                <WrongChain />
+            <div className="bg-gray-900 h-full p-5">
+                <div className="md:container md:mx-auto text-white">
+                    <WrongChain />
+                </div>
             </div>
         )
     }
