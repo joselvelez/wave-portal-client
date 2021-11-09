@@ -19,6 +19,7 @@ export const Wave = () => {
       setIsMining(false);
     } catch (e) {
       console.log(`Transaction failed. Check contract on etherscan for more information`);
+      setIsMining(false);
     }
   }
 
