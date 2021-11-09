@@ -4,6 +4,9 @@ import ThemeContext from "./ThemeContext";
 export const ThemeProvider = ({ children }) => {
     const [currentTheme, setCurrentTheme] = useState(false);
 
+    /*
+        Toggle between two different themes in your css using true/false values
+    */
     useLayoutEffect(() => {
         if (currentTheme === JSON.parse(window.localStorage.getItem('theme'))) {
             document.body.setAttribute('theme', currentTheme);
