@@ -29,8 +29,10 @@ const WalletProvider = ({ children }) => {
 
     useEffect(() => {
         walletInstalled();
-        getChain();
-        getAccount();
+        if (window.ethereum) {
+            getChain();
+            getAccount();
+        }
     }, []);
 
     // dispatch method to check if a wallet is installed
@@ -66,7 +68,7 @@ const WalletProvider = ({ children }) => {
                 console.log("No authorized account found");
             }
         } catch (e) {
-            console.log("Unable to fetch account", e);
+            console.log("Unable to fetch account");
         }
     };
 
